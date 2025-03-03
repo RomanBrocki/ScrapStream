@@ -20,7 +20,7 @@ gif_base64 = get_base64(gif_path)
 st.markdown(
     f"""
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap');
 
     /* Fundo da página */
     .stApp {{
@@ -40,22 +40,35 @@ st.markdown(
 
     /* Estilização do título */
     .title-container {{
+        margin-top: -30px; 
         text-align: center;
         padding: 10px 0;
+        margin-left: 30px;
     }}
 
     .title-text {{
-        font-family: 'Cinzel Decorative', serif;
-        font-size: 55px;
+        font-family: 'Playfair Display', serif;
+        font-size: 60px;
         font-weight: bold;
-        color: black;
-        text-shadow: 4px 4px 7px rgba(255, 255, 255, 0.8);
+        color: #2C3E50;  /* Cor mais sóbria e sofisticada */
+        text-shadow: 4px 4px 10px rgba(255, 255, 255, 0.8), 0px 0px 25px rgba(255, 0, 0, 0.8);
+        text-transform: uppercase;
+        letter-spacing: 2px;
     }}
 
     /* Ajuste no contraste do texto */
     h1, h2, h3, h4, h5, h6, p, label, span {{
         color: black !important;
         font-weight: bold;
+        text-align: center;
+    }}
+
+    /* Centralizar os títulos dos campos de input */
+    .stTextInput label,
+    .stTextArea label {{
+        text-align: center !important;
+        width: 100%;
+        display: block;
         text-align: center;
     }}
 
@@ -84,7 +97,7 @@ st.markdown(
     .info-text {{
         text-align: center;
         font-size: 20px;
-        margin-top: 10px;
+        margin-top: 30px;  /* Aumenta o espaçamento entre o subtítulo e os campos de input */
     }}
     </style>
     """,
@@ -119,7 +132,7 @@ st.markdown(
 st.markdown(
     """
     <div class="title-container">
-        <h1 class="title-text">Scrap de Novels 📚</h1>
+        <h1 class="title-text">Scrap de Novels</h1>
     </div>
     """,
     unsafe_allow_html=True
@@ -150,7 +163,7 @@ with col2:
 if submitted and ebook_name and start_url and end_url and save_path:
     with col3:
         gif_placeholder = st.empty()
-        gif_placeholder.image(f"data:image/gif;base64,{gif_base64}", use_column_width=True)  # Exibir GIF
+        gif_placeholder.image(f"data:image/gif;base64,{gif_base64}", use_container_width=True)  # Exibir GIF
 
     st.info("⏳ Iniciando processo de scrap... Isso pode levar alguns minutos.")
     
@@ -166,7 +179,22 @@ if submitted and ebook_name and start_url and end_url and save_path:
     # Remover GIF após finalização do scrap
     gif_placeholder.empty()
 
-st.write("DEBUG: Session State →", st.session_state)  # Mantendo o debug opcional
+#st.write("DEBUG: Session State →", st.session_state)  # Mantendo o debug opcional
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
