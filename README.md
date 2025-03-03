@@ -1,4 +1,5 @@
 ScrapStream
+
 ScrapStream é uma aplicação web baseada em Streamlit, projetada para fazer scraping de web novels utilizando Selenium e compilar o conteúdo extraído em formatos de eBook estruturados.
 
 Funcionalidades
@@ -57,14 +58,21 @@ Estrutura de Arquivos:
 
 app.py: Arquivo principal da aplicação Streamlit.
 novel_scraper.py: Contém a classe NovelScraper, responsável pela lógica de scraping.
+
 assets/: Diretório contendo recursos estáticos como imagens de fundo e GIFs.
+
 requirements.txt: Lista de dependências Python necessárias para o projeto.
+
 pattern.py : arquivo legado para medidas antiscraping co textos watermark
 
 Dependências:
 
 Streamlit: Para construir a interface web.
+
 Selenium: Para automatizar a interação com o navegador e realizar o scraping de conteúdo.
+
 python-docx: Para criar arquivos .docx a partir do conteúdo extraído.
+
 webdriver-manager: Para gerenciar automaticamente o ChromeDriver utilizado pelo Selenium.
+
 Todas as dependências estão listadas no arquivo requirements.txt.
