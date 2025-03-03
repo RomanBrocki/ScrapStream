@@ -3,14 +3,11 @@ ScrapStream é uma aplicação web baseada em Streamlit, projetada para fazer sc
 
 Funcionalidades
 
-Scraping de Web Novels: 
-Automatiza a extração de conteúdo de web novels.
+Scraping de Web Novels: Automatiza a extração de conteúdo de web novels.
 
-Interface Interativa: 
-Fornece uma interface fácil de usar para inserir os detalhes da novel e iniciar o processo de scraping.
+Interface Interativa: Fornece uma interface fácil de usar para inserir os detalhes da novel e iniciar o processo de scraping.
 
-Compilação de eBooks: 
-Compila o conteúdo extraído em formatos de eBook estruturados.
+Compilação de eBooks: Compila o conteúdo extraído em formatos de eBook estruturados.
 
 Instalação
 
@@ -45,8 +42,11 @@ Abra seu navegador e acesse o endereço:
 3. Forneça as informações necessárias:
 
 Nome do Ebook: Insira o nome desejado para o seu eBook.
+
 URL do primeiro capítulo: Forneça a URL do primeiro capítulo da novel.
+
 URL do último capítulo: Forneça a URL do último capítulo da novel.
+
 Caminho para salvar o ebook: Especifique o diretório onde o eBook será salvo.
 
 4. Inicie o processo de scraping:
