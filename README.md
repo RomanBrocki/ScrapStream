@@ -2,9 +2,15 @@ ScrapStream
 ScrapStream é uma aplicação web baseada em Streamlit, projetada para fazer scraping de web novels utilizando Selenium e compilar o conteúdo extraído em formatos de eBook estruturados.
 
 Funcionalidades
-Scraping de Web Novels: Automatiza a extração de conteúdo de web novels.
-Interface Interativa: Fornece uma interface fácil de usar para inserir os detalhes da novel e iniciar o processo de scraping.
-Compilação de eBooks: Compila o conteúdo extraído em formatos de eBook estruturados.
+
+Scraping de Web Novels: 
+Automatiza a extração de conteúdo de web novels.
+
+Interface Interativa: 
+Fornece uma interface fácil de usar para inserir os detalhes da novel e iniciar o processo de scraping.
+
+Compilação de eBooks: 
+Compila o conteúdo extraído em formatos de eBook estruturados.
 
 Instalação
 
