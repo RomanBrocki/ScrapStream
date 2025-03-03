@@ -10,13 +10,15 @@ Instalação
 
 1. Clone o repositório:
 
-git clone https://github.com/RomanBrocki/ScrapStream.git
-cd ScrapStream
+  git clone https://github.com/RomanBrocki/ScrapStream.git
+
+  cd ScrapStream
 
 2. Configure um ambiente virtual (opcional, mas recomendado):
 
-python -m venv env
-source env/bin/activate  # On Windows: env\Scripts\activate
+  python -m venv env
+
+  source env/bin/activate  # On Windows: env\Scripts\activate
 
 3. Instale as dependências necessárias:
 
@@ -32,7 +34,7 @@ Uso
 
 Abra seu navegador e acesse o endereço:
 
-http://localhost:8501
+  http://localhost:8501
 
 3. Forneça as informações necessárias:
 
