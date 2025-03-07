@@ -1,6 +1,6 @@
-# ScrapStream
+# ScrapNovel
 
-ScrapStream é uma aplicação web baseada em Streamlit, projetada para fazer scraping de web novels utilizando Selenium e compilar o conteúdo extraído em formatos de eBook estruturados.
+ScrapNovel é uma aplicação web baseada em Streamlit, projetada para fazer scraping de web novels utilizando Selenium e compilar o conteúdo extraído em formatos de eBook estruturados.
 
 ## Funcionalidades
 
