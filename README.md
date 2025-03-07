@@ -15,25 +15,27 @@ ScrapNovel é uma aplicação web baseada em Streamlit, projetada para fazer scr
 
     
     git clone https://github.com/RomanBrocki/ScrapStream.git
-    cd ScrapStream
+   
     
 
-2. **Configure um ambiente virtual (opcional, mas recomendado)**:
+3. **Configure um ambiente virtual (opcional, mas recomendado)**:
 
     
     python -m venv env
+   
     source env/bin/activate  # No Windows: env\Scripts\activate
     
 
-3. **Instale as dependências necessárias**:
+4. **Instale as dependências necessárias**:
 
-    bash
+   
     pip install -r requirements.txt
 
 
-4. **Configure o arquivo `config.py`**:
+5. **Configure o arquivo `config.py`**:
 
-   O arquivo `config.py` permite que você defina os **seletor dos elementos HTML**, o **caminho do perfil do Chrome** e o **autor do eBook**. Certifique-se de que os valores em `config.py` estão corretos de acordo com as web novels que você está scraping.
+   O arquivo `config.py` permite que você defina os **seletores dos elementos HTML**, o **caminho do perfil do Chrome** e o **autor do eBook**.
+   Certifique-se de que os valores em `config.py` estão corretos de acordo com suas preferências e com as web novels que você está fazendo scraping.
 
    Exemplo de `config.py`:
 
@@ -79,6 +81,7 @@ ScrapNovel é uma aplicação web baseada em Streamlit, projetada para fazer scr
 4. **Inicie o processo de scraping**:
 
     Clique no botão "Iniciar Scrap" para começar o scraping e compilar o eBook.
+    Possivelmente sistemas antiscrap como cloudflare podem pedir check anti robô. Você pode fazer o check manualmente ou aguardar que o código (e scrap) seguirá após um tempo.
 
 ## Estrutura de Arquivos:
 
