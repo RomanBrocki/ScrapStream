@@ -111,8 +111,8 @@ class NovelScraper:
             # Atualiza a URL para o próximo capítulo
             self.start_url = browser.current_url
 
-        # Adiciona a lista de capítulos (índice) no início do documento
-        document.paragraphs[0].insert_paragraph_before('Table of Contents', style='Heading 1')  # Título do índice
+        # Inserir o índice de capítulos no início do documento
+        document.add_paragraph('Table of Contents', style='Heading 1')  # Título do índice
         for title in chapter_titles:
             document.add_paragraph(f'{title}', style='Normal')  # Adiciona cada capítulo ao índice
 
@@ -158,6 +158,8 @@ class NovelScraper:
         self.save_path = save_path
         self.scrape_chapters(start_url, end_url)  # Realiza o scraping dos capítulos
         self.save_ebook(save_path, ebook_name)  # Salva o eBook gerado
+
+
 
 
 
