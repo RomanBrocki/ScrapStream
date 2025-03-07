@@ -132,7 +132,7 @@ st.markdown(
 st.markdown(
     """
     <div class="title-container">
-        <h1 class="title-text">Scrap de Novels</h1>
+        <h1 class="title-text">ScrapNovel</h1>
     </div>
     """,
     unsafe_allow_html=True

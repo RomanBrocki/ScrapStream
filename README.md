@@ -5,40 +5,59 @@ ScrapStream é uma aplicação web baseada em Streamlit, projetada para fazer sc
 ## Funcionalidades
 
 - **Scraping de Web Novels**: Automatiza a extração de conteúdo de web novels.
-
 - **Interface Interativa**: Fornece uma interface fácil de usar para inserir os detalhes da novel e iniciar o processo de scraping.
-
 - **Compilação de eBooks**: Compila o conteúdo extraído em formatos de eBook estruturados.
-
-- **Configuração Personalizável**: Agora com o arquivo `config.py`, você pode personalizar facilmente os seletores e a configuração do perfil do navegador para cada web novel.
+- **Configuração Personalizável**: Agora com o arquivo `config.py`, você pode personalizar facilmente os seletores, o autor do eBook e a configuração do perfil do navegador para cada web novel.
 
 ## Instalação
 
 1. **Clone o repositório**:
 
+    
     git clone https://github.com/RomanBrocki/ScrapStream.git
-
     cd ScrapStream
     
 
 2. **Configure um ambiente virtual (opcional, mas recomendado)**:
 
+    
     python -m venv env
-
     source env/bin/activate  # No Windows: env\Scripts\activate
+    
 
 3. **Instale as dependências necessárias**:
 
+    bash
     pip install -r requirements.txt
 
+
 4. **Configure o arquivo `config.py`**:
+
+   O arquivo `config.py` permite que você defina os **seletor dos elementos HTML**, o **caminho do perfil do Chrome** e o **autor do eBook**. Certifique-se de que os valores em `config.py` estão corretos de acordo com as web novels que você está scraping.
+
+   Exemplo de `config.py`:
+
    
-   O arquivo `config.py` permite que você defina os **seletor dos elementos HTML** e o **caminho do perfil do Chrome**. Certifique-se de que os valores em `config.py` estão corretos de acordo com as web novels que você está scraping.
+   from selenium.webdriver.common.by import By
+
+   config = {
+       'profile': r"c:\Users\Roman\AppData\Local\Google\Chrome\User Data\Profile Selenium",  # Caminho do perfil do Chrome
+
+       'author': 'ScrapNovel',  # Autor do eBook
+
+       'chapter_title_selector': (By.CLASS_NAME, 'chr-text'),  # Seletor para título do capítulo
+
+       'chapter_content_selector': (By.ID, 'chr-content'),  # Seletor para conteúdo do capítulo
+
+       'next_chapter_selector': (By.ID, 'next_chap')  # Seletor do botão de próximo capítulo
+   }
+   
 
 ## Uso
 
 1. **Execute o aplicativo Streamlit**:
 
+    
     streamlit run app.py
     
 
@@ -53,11 +72,8 @@ ScrapStream é uma aplicação web baseada em Streamlit, projetada para fazer sc
 3. **Forneça as informações necessárias**:
 
     - **Nome do Ebook**: Insira o nome desejado para o seu eBook.
-
     - **URL do primeiro capítulo**: Forneça a URL do primeiro capítulo da novel.
-
     - **URL do último capítulo**: Forneça a URL do último capítulo da novel.
-
     - **Caminho para salvar o ebook**: Especifique o diretório onde o eBook será salvo.
 
 4. **Inicie o processo de scraping**:
@@ -70,7 +86,7 @@ ScrapStream é uma aplicação web baseada em Streamlit, projetada para fazer sc
 
 - **novel_scraper.py**: Contém a classe `NovelScraper`, responsável pela lógica de scraping.
 
-- **config.py**: Arquivo de configuração para personalizar os seletores e o perfil do navegador.
+- **config.py**: Arquivo de configuração para personalizar os seletores, o autor e o perfil do navegador.
 
 - **assets/**: Diretório contendo recursos estáticos como imagens de fundo e GIFs.
 
@@ -88,8 +104,8 @@ ScrapStream é uma aplicação web baseada em Streamlit, projetada para fazer sc
 
 - **webdriver-manager**: Para gerenciar automaticamente o ChromeDriver utilizado pelo Selenium.
 
-- **Configurações customizáveis**: A aplicação agora usa o `config.py` para tornar a personalização dos seletores e perfil de navegador mais fácil e flexível.
+- **Configurações customizáveis**: A aplicação agora usa o `config.py` para tornar a personalização dos seletores, perfil de navegador e autor mais fácil e flexível.
 
-- **pattern**: Para exclusão de textos watermark. Sistema de legado acumulativo.
+- **pattern**: Para exclusão de textos watermark e outros padrões no conteúdo.
 
 Todas as dependências estão listadas no arquivo `requirements.txt`.
