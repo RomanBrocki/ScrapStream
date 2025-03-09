@@ -43,6 +43,7 @@ ScrapNovel é uma aplicação web baseada em Streamlit, projetada para fazer scr
    from selenium.webdriver.common.by import By
 
    config = {
+
        'profile': r"c:\Users\Roman\AppData\Local\Google\Chrome\User Data\Profile Selenium",  # Caminho do perfil do Chrome
 
        'author': 'ScrapNovel',  # Autor do eBook
