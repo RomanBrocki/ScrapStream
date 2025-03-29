@@ -180,6 +180,8 @@ pattern =  ['ALL new 𝒄hapters 𝒐n nov(𝒆)lbin(.)com',
             'ρꪖꪕᦔꪖꪕꪫꪣꫀꪶ',
             'ɴ[0)ᴠᴇʟ ',
             '-ɴ(0ᴠᴇ)ʟ',
-            'ρꪖnᦔa (nꪫꪣ)ꫀꪶ ']
+            'ρꪖnᦔa (nꪫꪣ)ꫀꪶ ',
+            'Enhance your reading experience by removing ads for as low as $1!',
+            'REMOVE ADS FROM $1',]
 
 replacement = ""
