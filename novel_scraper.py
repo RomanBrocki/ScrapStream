@@ -111,10 +111,15 @@ class NovelScraper:
             # Atualiza a URL para o próximo capítulo
             self.start_url = browser.current_url
 
+        # --- REMOVIDO: índice manual (texto simples) que não é funcional no Kindle ---
+        # Este trecho adicionava um índice de capítulos ao final do documento como parágrafos normais.
+        # Como o Calibre usa os estilos (Heading 2, etc.) para gerar um índice clicável, 
+        # este bloco não é mais necessário e pode ser desativado.
+        
         # Inserir o índice de capítulos no início do documento
-        document.add_paragraph('Table of Contents', style='Heading 1')  # Título do índice
-        for title in chapter_titles:
-            document.add_paragraph(f'{title}', style='Normal')  # Adiciona cada capítulo ao índice
+        # document.add_paragraph('Table of Contents', style='Heading 1')  # Título do índice
+        # for title in chapter_titles:
+        #     document.add_paragraph(f'{title}', style='Normal')  # Adiciona cada capítulo ao índice
 
         # Salva o documento somente após todos os capítulos e o índice terem sido adicionados
         document.save(os.path.join(self.save_path, "Novel.docx"))
