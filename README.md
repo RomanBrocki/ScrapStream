@@ -8,13 +8,15 @@ ScrapNovel é uma aplicação web baseada em Streamlit, projetada para fazer scr
 - **Interface Interativa**: Fornece uma interface fácil de usar para inserir os detalhes da novel e iniciar o processo de scraping.
 - **Compilação de eBooks**: Compila o conteúdo extraído em formatos de eBook estruturados.
 - **Configuração Personalizável**: Agora com o arquivo `config.py`, você pode personalizar facilmente os seletores, o autor do eBook e a configuração do perfil do navegador para cada web novel.
+- **Feedback visual dinâmico**: Mensagens de progresso agora são atualizadas automaticamente ao fim do processo de scraping.
+
 
 ## Instalação
 
 1. **Clone o repositório**:
 
     
-    git clone https://github.com/RomanBrocki/ScrapStream.git
+    git clone https://github.com/RomanBrocki/ScrapStream.git  # Repositório: ScrapStream, aplicação: ScrapNovel
    
     
 
@@ -81,8 +83,10 @@ ScrapNovel é uma aplicação web baseada em Streamlit, projetada para fazer scr
 
 4. **Inicie o processo de scraping**:
 
-    Clique no botão "Iniciar Scrap" para começar o scraping e compilar o eBook.
-    Possivelmente sistemas antiscrap como cloudflare podem pedir check anti robô. Você pode fazer o check manualmente ou aguardar que o código (e scrap) seguirá após um tempo.
+    Clique no botão "Iniciar Scrap" para começar o scraping e compilar o eBook. 
+    Durante o processo, uma animação e uma mensagem serão exibidas para indicar o andamento. 
+    Ao final, uma mensagem de sucesso confirmará a finalização e o local onde o arquivo foi salvo.
+
 
 ## Estrutura de Arquivos:
 
