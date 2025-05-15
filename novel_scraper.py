@@ -1,7 +1,9 @@
-from selenium import webdriver
+#from selenium import webdriver
 import os
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
+#from selenium.webdriver.chrome.service import Service
+#from selenium.webdriver.chrome.options import Options
+import undetected_chromedriver as uc
+import random
 from selenium.webdriver.common.by import By  # Importando 'By' para usar os seletores
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -52,9 +54,16 @@ class NovelScraper:
         """
         self.start_url = start_url
         self.end_url = end_url
-        options = Options()
-        options.add_argument("user-data-dir=" + self.config['profile'])  # Usando o perfil configurado
-        browser = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+
+        #options = Options()
+        #options.add_argument("user-data-dir=" + self.config['profile'])  # Usando o perfil configurado
+        #browser = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+        options = uc.ChromeOptions()
+        options.add_argument(f"--user-data-dir={self.config['profile']}")
+        options.add_argument("--no-sandbox")
+        options.add_argument("--disable-blink-features=AutomationControlled")
+
+        browser = uc.Chrome(options=options, headless=False)    
 
         document = Document()
 
@@ -65,8 +74,22 @@ class NovelScraper:
         # Lista para armazenar os títulos dos capítulos
         chapter_titles = []
 
+        capitulo_count = 0             # Contador de capítulos
+        falhas_recentes = 0            # Contador de falhas consecutivas
+        modo_seguro = True             # Começa em modo seguro, com delays mais longos
+
         while True:
             browser.get(self.start_url)
+
+            # ⏳ Aguardar tempo aleatório para simular leitura real após carregar a página
+            time.sleep(random.uniform(1.2, 2.2))
+
+            # 🖱️ Scroll gradual para simular comportamento humano
+            browser.execute_script("window.scrollTo(0, document.body.scrollHeight * 0.3);")
+            time.sleep(random.uniform(0.4, 0.7))
+            browser.execute_script("window.scrollTo(0, document.body.scrollHeight * 0.7);")
+            time.sleep(random.uniform(0.4, 0.7))
+            browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
 
             try:
                 # Espera até que o título do capítulo e o conteúdo estejam carregados na página
@@ -77,8 +100,14 @@ class NovelScraper:
                 chapter_title = browser.find_element(*self.config['chapter_title_selector']).text
                 chapter_content = browser.find_element(*self.config['chapter_content_selector']).text
 
+                # ✅ Sucesso: reseta contador de falhas
+                falhas_recentes = 0
+
             except Exception as e:
                 print(f"Error loading page or elements not found. Retrying... Error: {e}")
+                falhas_recentes += 1
+                if falhas_recentes >= 2:
+                    modo_seguro = True  # Ativa modo seguro após 2 falhas seguidas
                 time.sleep(5)
                 continue  # Tenta novamente caso o erro ocorra
 
@@ -111,6 +140,25 @@ class NovelScraper:
             # Atualiza a URL para o próximo capítulo
             self.start_url = browser.current_url
 
+            # 🔁 Pausa adaptativa entre capítulos
+            capitulo_count += 1
+
+            if modo_seguro:
+                if capitulo_count % 5 == 0:
+                    time.sleep(random.uniform(5.0, 8.0))  # Pausa maior no modo seguro
+                else:
+                    time.sleep(random.uniform(1.0, 2.0))  # Pausa padrão no modo seguro
+
+                # 🧠 Se passou 20 capítulos sem erro, volta ao modo rápido
+                if falhas_recentes == 0 and capitulo_count % 20 == 0:
+                    print("✅ Estável há 20 capítulos. Retornando ao modo rápido.")
+                    modo_seguro = False
+            else:
+                if capitulo_count % 5 == 0:
+                    time.sleep(random.uniform(2.0, 3.0))  # Pausa leve no modo rápido
+                else:
+                    time.sleep(random.uniform(0.4, 1.0))  # Pausa curta no modo rápido
+
         # --- REMOVIDO: índice manual (texto simples) que não é funcional no Kindle ---
         # Este trecho adicionava um índice de capítulos ao final do documento como parágrafos normais.
         # Como o Calibre usa os estilos (Heading 2, etc.) para gerar um índice clicável, 
@@ -125,6 +173,8 @@ class NovelScraper:
         document.save(os.path.join(self.save_path, "Novel.docx"))
 
         browser.quit()
+
+
 
     def get_log(self):
         """
