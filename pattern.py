@@ -95,6 +95,7 @@ pattern =  ['ALL new 𝒄hapters 𝒐n nov(𝒆)lbin(.)com',
             '𝒩ewW 𝒏ovels upd𝒂tes on nov/𝒆l/b(i)𝒏(.)com',
             'N𝒆/w novel chapt𝒆rs are published on n𝒐/vel(/bin(.)co/m',
             'pan da-nov el ,c`o`m',
+            'Please go to https://ReadRead/Divine-Emperor-of-Death/ to read the latest chapters for free',
             'Pa nda\nNovel',
             'ραΠdαsΝοvel.cοm'
             'Reading on All no vel full. com ,Please!',
