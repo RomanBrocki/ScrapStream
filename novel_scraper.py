@@ -10,6 +10,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 from docx import Document
 from pattern import pattern, replacement  # Importando pattern e replacement para substituição no texto
+from tools.desfaz_censura import desfazer_censura
+
 import time
 from config import config  # Importando o arquivo de configuração para os seletores
 
@@ -102,6 +104,10 @@ class NovelScraper:
                 # Extrai o título e o conteúdo do capítulo
                 chapter_title = browser.find_element(*self.config['chapter_title_selector']).text
                 chapter_content = browser.find_element(*self.config['chapter_content_selector']).text
+                
+                # Remove censura por pontos
+                chapter_content = desfazer_censura(chapter_content)
+
 
                 # ✅ Sucesso: reseta contador de falhas
                 falhas_recentes = 0
