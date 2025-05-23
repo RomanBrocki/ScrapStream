@@ -171,13 +171,22 @@ if submitted and ebook_name and start_url and end_url and save_path:
     
     # Inicia o scraper
     scraper = NovelScraper()
-    scraper.run_scraper(ebook_name, save_path, start_url, end_url)
+    with st.spinner("🔄 Gerando eBook..."):
+        stats = scraper.run_scraper(ebook_name, save_path, start_url, end_url)
 
     # Substitui a mensagem de andamento por mensagem de sucesso
     status_placeholder.success("✅ Scrap finalizado! Você pode fechar a janela ou iniciar um novo scrap.")
     
     # Exibe log e finaliza GIF
     st.success(f"✅ Ebook **{ebook_name}.docx** salvo em **{save_path}**!")
+
+    # Estatísticas do Processo
+    st.markdown(f"""
+        **⏱️ Duração total:** {stats["duracao_min"]} minutos  
+        **📄 Capítulos raspados:** {stats["capitulos"]}  
+        **🕒 Média por capítulo:** {stats["media_seg"]} segundos
+        """)
+
 
     log_output = scraper.get_log()
     st.text_area("📜 Log do Scrap", "\n".join(log_output), height=200)

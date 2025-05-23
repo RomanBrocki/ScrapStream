@@ -78,6 +78,9 @@ class NovelScraper:
         falhas_recentes = 0            # Contador de falhas consecutivas
         modo_seguro = True             # Começa em modo seguro, com delays mais longos
 
+        # começo do marcador de tempo
+        inicio = time.time()
+        
         while True:
             browser.get(self.start_url)
 
@@ -111,20 +114,27 @@ class NovelScraper:
                 time.sleep(5)
                 continue  # Tenta novamente caso o erro ocorra
 
-            # Adiciona o título do capítulo à lista de capítulos
-            chapter_titles.append(chapter_title)
+            # Verifica se o capítulo já foi copiado para evitar duplicatas
+            capitulo_duplicado = chapter_title in chapter_titles
 
-            # Substitui os padrões definidos em `pattern.py`
-            for element in pattern:
-                if element in chapter_content:
-                    self.occurrence_list.append(f'Found: {element}')  # Registra a ocorrência
-                    self.occurrences += 1  # Incrementa o contador de ocorrências
-                chapter_content = chapter_content.replace(element, replacement)  # Substitui o padrão encontrado
+            if capitulo_duplicado:
+                print(f"⚠️ Capítulo repetido detectado: '{chapter_title}'. Conteúdo será ignorado, mas avançando normalmente.")
+            else:
+                # Adiciona o título do capítulo à lista de capítulos
+                chapter_titles.append(chapter_title)
 
-            # Adiciona o capítulo ao documento
-            document.add_paragraph(f'{chapter_title}', style='Heading 2')  # Título do capítulo
-            document.add_paragraph(chapter_content)  # Conteúdo do capítulo
-            document.add_page_break()
+                # Substitui os padrões definidos em `pattern.py`
+                for element in pattern:
+                    if element in chapter_content:
+                        self.occurrence_list.append(f'Found: {element}')  # Registra a ocorrência
+                        self.occurrences += 1  # Incrementa o contador de ocorrências
+                    chapter_content = chapter_content.replace(element, replacement)  # Substitui o padrão encontrado
+
+                # Adiciona o capítulo ao documento
+                document.add_paragraph(f'{chapter_title}', style='Heading 2')  # Título do capítulo
+                document.add_paragraph(chapter_content)  # Conteúdo do capítulo
+                document.add_page_break()
+
 
             if self.start_url == self.end_url:
                 break  # Se o scraping chegou ao último capítulo, sai do loop
@@ -170,9 +180,29 @@ class NovelScraper:
         #     document.add_paragraph(f'{title}', style='Normal')  # Adiciona cada capítulo ao índice
 
         # Salva o documento somente após todos os capítulos e o índice terem sido adicionados
+        
+        # Calculo da marcação de tempo
+        fim = time.time()
+        duracao_segundos = fim - inicio
+        duracao_minutos = duracao_segundos / 60
+        media_por_capitulo = duracao_segundos / capitulo_count if capitulo_count else 0
+
+        print(f"📘 Scraping finalizado.")
+        print(f"⏱️ Duração total: {duracao_minutos:.2f} minutos")
+        print(f"📄 Capítulos raspados: {capitulo_count}")
+        print(f"🕒 Média por capítulo: {media_por_capitulo:.2f} segundos")
+        
+
+
         document.save(os.path.join(self.save_path, "Novel.docx"))
 
         browser.quit()
+
+        return {
+            "duracao_min": round(duracao_minutos, 2),
+            "capitulos": capitulo_count,
+            "media_seg": round(media_por_capitulo, 2)
+        }
 
 
 
@@ -211,8 +241,9 @@ class NovelScraper:
         - end_url: URL do último capítulo.
         """
         self.save_path = save_path
-        self.scrape_chapters(start_url, end_url)  # Realiza o scraping dos capítulos
+        stats = self.scrape_chapters(start_url, end_url)  # Realiza o scraping dos capítulos e pega o retorno da mensuração de tempo
         self.save_ebook(save_path, ebook_name)  # Salva o eBook gerado
+        return stats
 
 
 
