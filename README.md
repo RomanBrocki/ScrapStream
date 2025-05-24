@@ -1,119 +1,135 @@
 # ScrapNovel
 
-ScrapNovel é uma aplicação web baseada em Streamlit, projetada para fazer scraping de web novels utilizando Selenium e compilar o conteúdo extraído em formatos de eBook estruturados.
+**ScrapNovel** é uma aplicação web baseada em Streamlit para fazer scraping automatizado de web novels usando Selenium. O conteúdo extraído é tratado, limpo e compilado em um eBook `.docx`.
 
-## Funcionalidades
+---
 
-- **Scraping de Web Novels**: Automatiza a extração de conteúdo de web novels.
-- **Interface Interativa**: Fornece uma interface fácil de usar para inserir os detalhes da novel e iniciar o processo de scraping.
-- **Compilação de eBooks**: Compila o conteúdo extraído em formatos de eBook estruturados.
-- **Configuração Personalizável**: Agora com o arquivo `config.py`, você pode personalizar facilmente os seletores, o autor do eBook e a configuração do perfil do navegador para cada web novel.
-- **Feedback visual dinâmico**: Mensagens de progresso agora são atualizadas automaticamente ao fim do processo de scraping.
+## 📈 Funcionalidades
 
+### Módulo Web (Streamlit)
 
-## Instalação
+* Interface elegante e responsiva para entrada de dados.
+* Inicia scraping com feedback visual e animações.
+* Gera eBooks em `.docx` com títulos formatados.
 
-1. **Clone o repositório**:
+### Scraper (core: `novel_scraper.py`)
 
-    
-    git clone https://github.com/RomanBrocki/ScrapStream.git  # Repositório: ScrapStream, aplicação: ScrapNovel
-   
-    
+* Navega entre capítulos via botão "próximo".
+* Substitui expressões predefinidas (anti-spam/watermark).
+* Remove censura por pontos ("s.e.x" → "sex").
+* Gera log com ocorrências encontradas.
 
-3. **Configure um ambiente virtual (opcional, mas recomendado)**:
+### Scripts Auxiliares
 
-    
-    python -m venv env
-   
-    source env/bin/activate  # No Windows: env\Scripts\activate
-    
+* `apaga_duplicados.py`: remove capítulos repetidos no `.docx` e gera log.
+* `desfaz_censura.py`: remove censura por pontos.
+* `limpa_docx.py`: aplica remoções e substituições com base no `pattern.py`.
 
-4. **Instale as dependências necessárias**:
+---
 
-   
-    pip install -r requirements.txt
+## ⚙️ Instalação Rápida
 
+```bash
+# Clone o repositório
+git clone https://github.com/RomanBrocki/ScrapStream.git
 
-5. **Configure o arquivo `config.py`**:
+# Crie e ative o ambiente virtual (opcional)
+python -m venv env
+source env/bin/activate  # ou env\Scripts\activate no Windows
 
-   O arquivo `config.py` permite que você defina os **seletores dos elementos HTML**, o **caminho do perfil do Chrome** e o **autor do eBook**.
-   Certifique-se de que os valores em `config.py` estão corretos de acordo com suas preferências e com as web novels que você está fazendo scraping.
+# Instale as dependências
+pip install -r requirements.txt
+```
 
-   Exemplo de `config.py`:
+---
 
-   
-   from selenium.webdriver.common.by import By
+## 🔧 Configuração do Scraper
 
-   config = {
+Edite o arquivo `config.py` para definir:
 
-       'profile': r"c:\Users\Roman\AppData\Local\Google\Chrome\User Data\Profile Selenium",  # Caminho do perfil do Chrome
+```python
+from selenium.webdriver.common.by import By
 
-       'author': 'ScrapNovel',  # Autor do eBook
+config = {
+    'profile': r"caminho/para/perfil/chrome",
+    'author': 'ScrapNovel',
+    'chapter_title_selector': (By.CLASS_NAME, 'chr-text'),
+    'chapter_content_selector': (By.ID, 'chr-content'),
+    'next_chapter_selector': (By.ID, 'next_chap')
+}
+```
 
-       'chapter_title_selector': (By.CLASS_NAME, 'chr-text'),  # Seletor para título do capítulo
+---
 
-       'chapter_content_selector': (By.ID, 'chr-content'),  # Seletor para conteúdo do capítulo
+## 🚀 Executando a aplicação
 
-       'next_chapter_selector': (By.ID, 'next_chap')  # Seletor do botão de próximo capítulo
-   }
-   
+```bash
+streamlit run app.py
+```
 
-## Uso
+Acesse via navegador: [http://localhost:8501](http://localhost:8501)
 
-1. **Execute o aplicativo Streamlit**:
+---
 
-    
-    streamlit run app.py
-    
+## 🔮 Tutorial passo a passo
 
-2. **Acesse a aplicação**:
+1. **Execute o app com Streamlit**:
 
-    Abra seu navegador e acesse o endereço:
+   ```bash
+   streamlit run app.py
+   ```
 
-    
-    http://localhost:8501
-    
+2. **Abra o navegador** em `http://localhost:8501`
 
-3. **Forneça as informações necessárias**:
+3. **Preencha os campos**:
 
-    - **Nome do Ebook**: Insira o nome desejado para o seu eBook.
-    - **URL do primeiro capítulo**: Forneça a URL do primeiro capítulo da novel.
-    - **URL do último capítulo**: Forneça a URL do último capítulo da novel.
-    - **Caminho para salvar o ebook**: Especifique o diretório onde o eBook será salvo.
+   * Nome do eBook
+   * URL do primeiro capítulo
+   * URL do último capítulo
+   * Caminho para salvar o arquivo `.docx`
 
-4. **Inicie o processo de scraping**:
+4. **Clique em "Iniciar Scrap"**
 
-    Clique no botão "Iniciar Scrap" para começar o scraping e compilar o eBook. 
-    Durante o processo, uma animação e uma mensagem serão exibidas para indicar o andamento. 
-    Ao final, uma mensagem de sucesso confirmará a finalização e o local onde o arquivo foi salvo.
+   * Um GIF será exibido enquanto o scraping ocorre.
+   * Ao final, uma mensagem de sucesso aparecerá com detalhes e o log.
 
+---
 
-## Estrutura de Arquivos:
+## 📂 Estrutura de Arquivos
 
-- **app.py**: Arquivo principal da aplicação Streamlit.
+* `app.py`: Interface Streamlit
+* `novel_scraper.py`: Lógica de scraping
+* `config.py`: Configuração de seletores e perfil do navegador
+* `pattern.py`: Lista de expressões a remover
+* `desfaz_censura.py`: Remove censura com pontos
+* `apaga_duplicados.py`: Remove capítulos duplicados
+* `limpa_docx.py`: Aplica padrões de limpeza com `pattern`
+* `assets/`: Imagens e GIFs para UI
+* `requirements.txt`: Dependências
 
-- **novel_scraper.py**: Contém a classe `NovelScraper`, responsável pela lógica de scraping.
+---
 
-- **config.py**: Arquivo de configuração para personalizar os seletores, o autor e o perfil do navegador.
+## 📊 Dependências
 
-- **assets/**: Diretório contendo recursos estáticos como imagens de fundo e GIFs.
+```txt
+selenium
+webdriver-manager
+python-docx
+streamlit
+```
 
-- **requirements.txt**: Lista de dependências Python necessárias para o projeto.
+---
 
-- **pattern.py**: Arquivo legado com medidas anti-scraping e textos watermark.
+## 🌐 Scripts Avulsos
 
-## Dependências:
+Utilize diretamente via terminal para tratar arquivos `.docx` existentes:
 
-- **Streamlit**: Para construir a interface web.
+```bash
+python apaga_duplicados.py
+python desfaz_censura.py
+python limpa_docx.py
+```
 
-- **Selenium**: Para automatizar a interação com o navegador e realizar o scraping de conteúdo.
+---
 
-- **python-docx**: Para criar arquivos `.docx` a partir do conteúdo extraído.
-
-- **webdriver-manager**: Para gerenciar automaticamente o ChromeDriver utilizado pelo Selenium.
-
-- **Configurações customizáveis**: A aplicação agora usa o `config.py` para tornar a personalização dos seletores, perfil de navegador e autor mais fácil e flexível.
-
-- **pattern**: Para exclusão de textos watermark e outros padrões no conteúdo.
-
-Todas as dependências estão listadas no arquivo `requirements.txt`.
+Projeto desenvolvido por Roman W. Brocki com foco em automação, praticidade e refinamento de eBooks gerados a partir de web novels.
