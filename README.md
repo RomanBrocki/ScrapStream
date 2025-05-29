@@ -1,33 +1,36 @@
-# ScrapNovel
+# 📚 ScrapNovel
 
-**ScrapNovel** é uma aplicação web baseada em Streamlit para fazer scraping automatizado de web novels usando Selenium. O conteúdo extraído é tratado, limpo e compilado em um eBook `.docx`.
-
----
-
-## 📈 Funcionalidades
-
-### Módulo Web (Streamlit)
-
-* Interface elegante e responsiva para entrada de dados.
-* Inicia scraping com feedback visual e animações.
-* Gera eBooks em `.docx` com títulos formatados.
-
-### Scraper (core: `novel_scraper.py`)
-
-* Navega entre capítulos via botão "próximo".
-* Substitui expressões predefinidas (anti-spam/watermark).
-* Remove censura por pontos ("s.e.x" → "sex").
-* Gera log com ocorrências encontradas.
-
-### Scripts Auxiliares
-
-* `apaga_duplicados.py`: remove capítulos repetidos no `.docx` e gera log.
-* `desfaz_censura.py`: remove censura por pontos.
-* `limpa_docx.py`: aplica remoções e substituições com base no `pattern.py`.
+**ScrapNovel** é uma aplicação web baseada em **Streamlit** para scraping automatizado de web novels. Utiliza **Selenium com `undetected_chromedriver`** para contornar bloqueios como Cloudflare e compila os capítulos extraídos em um eBook `.docx` limpo e legível.
 
 ---
 
-## ⚙️ Instalação Rápida
+## 📊 Funcionalidades
+
+### 🔹 Módulo Web (`app.py`)
+
+* Interface responsiva com Streamlit
+* Entrada intuitiva dos dados (nome do eBook, URLs, saída)
+* Feedback visual com animação de progresso
+* Geração automatizada de `.docx` com estrutura e títulos formatados
+
+### 🔹 Núcleo do Scraper (`novel_scraper.py`)
+
+* Todas as operações centralizadas em uma **classe `NovelScraper`**
+* Navegação automática capítulo a capítulo via botão "Próximo"
+* Substituições personalizadas com base em `pattern.py`
+* Remove censura por pontos (ex.: `s.e.x` → `sex`)
+* Gera log detalhado com expressões tratadas
+* **Função `scrape_chapters()` adaptada para contornar o Cloudflare**, com lógica de retry e espera
+
+### 🔹 Scripts Auxiliares
+
+* `apaga_duplicados.py`: remove capítulos repetidos no `.docx`
+* `desfaz_censura.py`: limpa censura por pontos em arquivos existentes
+* `limpa_docx.py`: aplica as substituições definidas em `pattern.py`
+
+---
+
+## ⚙️ Instalação
 
 ```bash
 # Clone o repositório
@@ -35,7 +38,8 @@ git clone https://github.com/RomanBrocki/ScrapStream.git
 
 # Crie e ative o ambiente virtual (opcional)
 python -m venv env
-source env/bin/activate  # ou env\Scripts\activate no Windows
+source env/bin/activate  # Linux/macOS
+env\Scripts\activate     # Windows
 
 # Instale as dependências
 pip install -r requirements.txt
@@ -43,9 +47,9 @@ pip install -r requirements.txt
 
 ---
 
-## 🔧 Configuração do Scraper
+## 🛠️ Configuração
 
-Edite o arquivo `config.py` para definir:
+Edite o arquivo `config.py` para definir o perfil do Chrome e os seletores CSS/ID usados nos capítulos:
 
 ```python
 from selenium.webdriver.common.by import By
@@ -61,69 +65,61 @@ config = {
 
 ---
 
-## 🚀 Executando a aplicação
+## 🚀 Como Executar
 
 ```bash
 streamlit run app.py
 ```
 
-Acesse via navegador: [http://localhost:8501](http://localhost:8501)
+Abra no navegador: [http://localhost:8501](http://localhost:8501)
 
 ---
 
-## 🔮 Tutorial passo a passo
+## 📋 Tutorial Rápido
 
-1. **Execute o app com Streamlit**:
-
-   ```bash
-   streamlit run app.py
-   ```
-
-2. **Abra o navegador** em `http://localhost:8501`
-
-3. **Preencha os campos**:
+1. Execute o app com `streamlit run app.py`
+2. Preencha:
 
    * Nome do eBook
    * URL do primeiro capítulo
    * URL do último capítulo
-   * Caminho para salvar o arquivo `.docx`
-
-4. **Clique em "Iniciar Scrap"**
-
-   * Um GIF será exibido enquanto o scraping ocorre.
-   * Ao final, uma mensagem de sucesso aparecerá com detalhes e o log.
+   * Caminho para salvar o `.docx`
+3. Clique em **"Iniciar Scrap"**
+4. Acompanhe o progresso via animação (GIF)
+5. Ao final, uma mensagem de sucesso será exibida com o log salvo
 
 ---
 
-## 📂 Estrutura de Arquivos
+## 📂 Estrutura do Projeto
 
-* `app.py`: Interface Streamlit
-* `novel_scraper.py`: Lógica de scraping
-* `config.py`: Configuração de seletores e perfil do navegador
-* `pattern.py`: Lista de expressões a remover
-* `desfaz_censura.py`: Remove censura com pontos
-* `apaga_duplicados.py`: Remove capítulos duplicados
-* `limpa_docx.py`: Aplica padrões de limpeza com `pattern`
-* `assets/`: Imagens e GIFs para UI
-* `requirements.txt`: Dependências
-
----
-
-## 📊 Dependências
-
-```txt
-selenium
-undetected_chromedriver
-webdriver-manager(não recomendado)
-python-docx
-streamlit
-```
+| Arquivo/Pasta         | Descrição                                            |
+| --------------------- | ---------------------------------------------------- |
+| `app.py`              | Interface em Streamlit                               |
+| `novel_scraper.py`    | Lógica de scraping (classe `NovelScraper`)           |
+| `config.py`           | Configurações de scraping e perfil do Chrome         |
+| `pattern.py`          | Expressões e palavras a serem removidas/substituídas |
+| `desfaz_censura.py`   | Remove censura por pontos                            |
+| `apaga_duplicados.py` | Elimina capítulos repetidos                          |
+| `limpa_docx.py`       | Aplica padrão de limpeza em `.docx`                  |
+| `assets/`             | Imagens e animações para interface                   |
+| `requirements.txt`    | Lista de dependências do projeto                     |
 
 ---
 
-## 🌐 Scripts Avulsos
+## 📦 Dependências
 
-Utilize diretamente via terminal para tratar arquivos `.docx` existentes:
+* `selenium`
+* `undetected-chromedriver`
+* `streamlit`
+* `python-docx`
+
+> ⚠️ `webdriver-manager` está incluído, mas **não recomendado**, pois não contorna bloqueios como o Cloudflare.
+
+---
+
+## 🧹 Scripts Avulsos
+
+Execute no terminal para tratar `.docx` existentes:
 
 ```bash
 python apaga_duplicados.py
@@ -133,4 +129,9 @@ python limpa_docx.py
 
 ---
 
-Projeto desenvolvido por Roman W. Brocki com foco em automação, praticidade e refinamento de eBooks gerados a partir de web novels.
+## 👨‍💻 Autor
+
+Desenvolvido por **Roman W. Brocki**, com foco em automação, praticidade e refinamento textual para eBooks extraídos de web novels.
+
+---
+
