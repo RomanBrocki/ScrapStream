@@ -20,7 +20,7 @@
 * Substituições personalizadas com base em `pattern.py`
 * Remove censura por pontos (ex.: `s.e.x` → `sex`)
 * Gera log detalhado com expressões tratadas
-* **Função `scrape_chapters()` adaptada para contornar o Cloudflare**, com lógica de retry e espera
+* **Função `scrape_chapters()` adaptada para contornar o Cloudflare**, com lógica de retry, espera e scrolldown
 
 ### 🔹 Scripts Auxiliares
 
