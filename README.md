@@ -113,7 +113,8 @@ Acesse via navegador: [http://localhost:8501](http://localhost:8501)
 
 ```txt
 selenium
-webdriver-manager
+undetected_chromedriver
+webdriver-manager(não recomendado)
 python-docx
 streamlit
 ```
