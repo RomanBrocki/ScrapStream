@@ -1,2 +1,4 @@
 venv/
 Scrap_streamlit
+llama_cuda
+tools/openhermes
